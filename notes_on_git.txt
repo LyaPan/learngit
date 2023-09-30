@@ -1,0 +1,38 @@
+安装git：sudo apt-get install git
+
+创建版本库：mkdir 文件夹名  （mkdir = make directory）
+    cd 该文件夹  （到该文件夹目录下）
+    pwd （显示当前目录，确认到该文件夹了，多余操作）
+    git init （把该文件夹，或者说，该目录变成Git可以管理的仓库，此时会有一个隐藏的.git文件夹，这个就是管理版本库的目录，不能乱动，隐藏文件可用 ls -ah命令显示）
+    
+在某个目录下创建文件：> filename.txt （这样就利用重定向符创建了一个txt文件）
+
+将文件修改提交到暂存区：git add filename.xxx （没有反馈说明是正常的）
+
+将暂存区修改提交到git仓库 ：git commit
+    git commit -m "本次提交的说明内容" （一般而言是要这样的，不然会打开nano或im叫你去写说明内容，应该有别的指令去不写说明内容）
+    
+查看目前工作区和暂存区状态：git status
+    一共有几种情况：modified，表明文件有修改（工作区），但未提交到暂存区，显示“尚未暂存以备提交的更改”；added，提交到暂存区了，显示“修改尚未加入提交”；修改全部commit到分支（branch）里了，显示“无文件要提交，干净的工作区”。
+    
+查看新修改与暂存区的不同：git diff filename.xxx
+    git diff HEAD -- filename.xxx （不太清楚这俩有什么区别）
+    
+查看版本记录：git log
+    git log --pretty=oneline （简化输出信息）
+    
+版本回退：git reset --hard HEAD^ （回退一个版本，则一个^）
+    git reset --hard HEAD^^ （回退两个版本）
+    git reset --hard HEAD~100 （回退100个版本）
+    git reset --hard xxxxxx （回退到特定版本，这个xxxxx是版本的id）
+    
+查看历史修改记录：git reflog （回顾以前修改了什么，这样子，可以看到回退前的版本commit id，于是可以搭时光机到“未来”的版本）
+
+丢弃文件在工作区的修改：git checkout -- filename.xxx
+    git restore filename （这个命令也可以丢弃在工作区的修改）
+    
+工作区-->暂存区-->分支
+    working directroy-->stage(or index)-->branch(with name like "master" or "main" or others)
+    stage and branches together consists of repository(版本库)
+    
+
