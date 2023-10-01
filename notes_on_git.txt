@@ -1,3 +1,13 @@
+*******
+Notice:
+    This file is a backup I made when I was learning how to use git, when I forget some commands I will use it as a reference, most of the information here is from :
+    https://www.liaoxuefeng.com/wiki/896043488029600
+    I was also benifited a lot from many other blogs and thank those authors.
+注：
+        这是我在学习使用git时记录的一份备忘录文件，方便自己在忘记某些命令时查阅，其中主要内容来自：廖雪峰的官方网站-Git教程，链接如上。
+        学习过程中我也参考了许多其他博客，十分感谢这些作者。
+*******
+
 1.安装git：sudo apt-get install git
 
 2.创建版本库：mkdir 文件夹名  （mkdir = make directory）
@@ -97,3 +107,9 @@
     step4: 这之后再git push就是走的ssh，应该会快一些。
     remark：似乎可以在这句话下面多加一些什么，然后就可以设置用网络代理去弄这个ssh端口了。
     
+24.git merge分支合并进阶：
+    -通常，如果在无冲突情况下使用git merge <branch>，那么git会自动使用Fast forward模式，但这种模式下，如果删除分支后，会丢失掉分支信息.
+    -如果我们想要在merge后删掉多余branch，而还能在历史记录里看到分支信息，就需要禁用Fast forward模式，此时Git在merge时就会生成一个新的commit（因而也需要用-m "commit message"命令去提交说明），具体如下：
+    git merge --no-ff -m "commit message" <branch>
+    -之后再git branch -d <branch>删去多余分支后，使用git log命令仍能看到历史分支记录。
+    remark:在合并的两个分支有冲突的情况下，之前说过需要手动调整，此时也会默认禁用Fast forward模式，因而也会保留branch记录。
