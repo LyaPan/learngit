@@ -1,48 +1,60 @@
-安装git：sudo apt-get install git
+1.安装git：sudo apt-get install git
 
-创建版本库：mkdir 文件夹名  （mkdir = make directory）
+2.创建版本库：mkdir 文件夹名  （mkdir = make directory）
     cd 该文件夹  （到该文件夹目录下）
     pwd （显示当前目录，确认到该文件夹了，多余操作）
     git init （把该文件夹，或者说，该目录变成Git可以管理的仓库，此时会有一个隐藏的.git文件夹，这个就是管理版本库的目录，不能乱动，隐藏文件可用 ls -ah命令显示）
     
-在某个目录下创建文件：> filename.txt （这样就利用重定向符创建了一个txt文件）
+3.在某个目录下创建文件：> filename.txt （这样就利用重定向符创建了一个txt文件）
 
-将文件修改提交到暂存区：git add filename.xxx （没有反馈说明是正常的）
+4.将文件修改提交到暂存区：git add filename.xxx （没有反馈说明是正常的）
 
-将暂存区修改提交到git仓库 ：git commit
+5.将暂存区修改提交到git仓库 ：git commit
     git commit -m "本次提交的说明内容" （一般而言是要这样的，不然会打开nano或im叫你去写说明内容，应该有别的指令去不写说明内容）
     
-查看目前工作区和暂存区状态：git status
+6.查看目前工作区和暂存区状态：git status
     一共有几种情况：modified，表明文件有修改（工作区），但未提交到暂存区，显示“尚未暂存以备提交的更改”；added，提交到暂存区了，显示“修改尚未加入提交”；修改全部commit到分支（branch）里了，显示“无文件要提交，干净的工作区”。
     
-查看新修改与暂存区的不同：git diff filename.xxx
+7.查看新修改与暂存区的不同：git diff filename.xxx
     git diff HEAD -- filename.xxx （不太清楚这俩有什么区别）
     
-查看版本记录：git log
+8.查看版本记录：git log
     git log --pretty=oneline （简化输出信息）
     
-版本回退：git reset --hard HEAD^ （回退一个版本，则一个^）
+9.版本回退：git reset --hard HEAD^ （回退一个版本，则一个^）
     git reset --hard HEAD^^ （回退两个版本）
     git reset --hard HEAD~100 （回退100个版本）
     git reset --hard xxxxxx （回退到特定版本，这个xxxxx是版本的id）
     notice:版本回退后，在这个版本之后修改的东西就没了，除非，再“搭时光机到未来”。例如，我在版本2创建提交了一个文件A，在版本三我把它删了，还commit了，同时这一版本我还建立了文件B，此时，如果回到版本2,文件B就没了，因为这个版本2时还是没有文件B的。一个办法是回退前偷偷复制一份B出仓库，再回退，或者，回退后copy存一份A，然后到版本3。
     
-查看历史修改记录：git reflog （回顾以前修改了什么，这样子，可以看到回退前的版本commit id，于是可以搭时光机到“未来”的版本）
+10.查看历史修改记录：git reflog （回顾以前修改了什么，这样子，可以看到回退前的版本commit id，于是可以搭时光机到“未来”的版本）
 
-丢弃文件在工作区的修改：git checkout -- filename.xxx
+11.丢弃文件在工作区的修改：git checkout -- filename.xxx
     git restore filename （这个命令也可以丢弃在工作区的修改）
     
-工作区-->暂存区-->分支
+12.工作区-->暂存区-->分支
     working directroy-->stage(or index)-->branch(with name like "master" or "main" or others)
     stage and branches together consists of repository(版本库)
     
-丢弃文件在暂存区的修改：git restore --staged filename.xxx 
+13.丢弃文件在暂存区的修改：git restore --staged filename.xxx 
     git reset HEAD filename.xxx （这个指令也行，直接退回到这个名字的文件的branch版本）
     注意，取消在暂存区（stage）里的修改后，工作区里还有修改，因此还要再丢弃文件在工作的修改
     
-删除文件：rm filename.xxx （删除本地文件）
+14.删除文件：rm filename.xxx （删除本地文件）
     git rm filename.xxx  （删除git仓库里的文件）
     git commit -m "xxx"  （删除后还要提交commit）
     git checkout -- filename.xxx （在还未提交修改前，可以用该命令后悔，用版本库里的版本替换工作区的版本，本质上，无论工作区是修改还是删除，都可以用此一键还原）
     如果已经commit了，就只能用版本回退了。回退前记得把工作区其他修改提交。
+
+15.github远程仓库建立与初始化（先有本地库，后有远程库，如何关联远程库）：
+    step1:创建SSH Key。在用户主目录下看有无.ssh文件夹（记得勾选显示隐藏文件夹，或者bash中使用ls -ah命令列出当前目录下含隐藏文件在内的所有文件），里面的id_rsa为私钥，id_rsa.pub为公钥。若无.ssh,bash中输入命令:ssh-keygen -t rsa -C "你的邮箱地址",然后一路回车即可.
+    step2:把你的公钥,添加到你的github账号里去:登陆github,没账号先创一个,连不上就想办法翻个墙.打开setting,再打开ssh and gpg keys这个设置,点new ssh key,把id_rsa.pub里面的内容全部复制到里面,添加即可.
+    step3:创建git仓库:先点create a new repository,写个repository name(仓库名),创建.
+    step4:和电脑上的仓库关联:打开bash,cd到本地仓库的目录,然后输入 git remote add origin git@github.com:xxxxxxx(你的github用户名)/xxxx.git(你的仓库名)即可,此处有一点要注意,千万别按github上提示的那个来,那个提示的是填http地址,但是貌似github从21年8月13日开始就不能用http登录了还是咋地,我们用的是ssh命令,因此要用形如 git@github.com/xxxxx/xxx.git的地址而不是https://github.com/xxxx/xxxx.git的地址;输入完后,敲回车,等一会,因为连接github可能要时间,总之会有反馈,然后如果是第一次用这个ssh连接,还会出现一个warning,要你确认这个Github服务器的key是不是真的来自Github,输入yes,回车,就ok了;这之后github的key就被添加到本机信任列表里.
+    remark：gir remote add origin xxxxx,此处的origin就是给远程库起的名字
     
+16.查看远程库信息：git remote -v
+
+17.删除远程库：git remote rm <name> (<>不用打，里面填远程库名字，远程库名字可以用git remote -v查看版本时获得，开头那个单词就是)
+   remark:删除远程库本质上是“解绑”，取消本地和远程的关联，真删远程库还得上github去删。   
+   
