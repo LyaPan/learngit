@@ -75,3 +75,12 @@
     --6.删除分支：git branch -d <name>
     --7.git鼓励大量使用分支！
     
+21.分支冲突：当两个分支各自有了新的commit，（且存在相同文件修改不同情形？）此时，无法执行“快速合并”，即，输入git merge指令时，会显示存在冲突，git status会说明存在冲突的文件，而我们此时可以直接打开这个文件，git会用<<<<<<<,=======,>>>>>>>这三种符号标记出不同分支的内容，其中<<<<<<<表示冲突的开始，========为区别两个分支的分割线，>>>>>>>表示冲突的结尾，我们在这个文件中进行修改，删去三种分隔符并选择我们要保留的内容（甚至可以，删去statement1,statement2,而另写一个statement3）。
+        之后，再git add + git commit后就合并完成。
+        此时可以删去多余的分支。
+
+22.git log的几个参数：
+    git log --graph --pretty=oneline --abbrev-commit
+    remark1:--graph显示分支的合并情况；
+    remark2:--pretty=oneline简化说明内容到一行，不显示用户名和油箱
+    remark3:--abbrev-commit是将commit id简写，只保留足够区分不同commit版本的id位数。
