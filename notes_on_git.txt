@@ -58,3 +58,12 @@
 17.删除远程库：git remote rm <name> (<>不用打，里面填远程库名字，远程库名字可以用git remote -v查看版本时获得，开头那个单词就是)
    remark:删除远程库本质上是“解绑”，取消本地和远程的关联，真删远程库还得上github去删。   
    
+18.把本地branch的最新修改推送到github：git push origin main
+    remark:此处的origin是远程库的名字，如果当时创建时起的是别的名字，就改成别的；此处的main是本地你要提交的branch的名字
+    
+19.克隆远程库（先创建远程库，再从远程库克隆）：
+    step1:现在github上创建一个新的repository，创建时可以勾选上Initialize this repository with:Add a README file，这样创建后就会有个README.txt
+    step2：克隆到本地，先cd到你想clone这个仓库的位置，这个位置不必是已经git init了的文件夹，因为clone下来的文件夹是一个已经初始化为仓库的文件夹，而且感觉最好也不要放在已有仓库的目录下，这样子会变成仓库里还有个仓库，感觉很不对劲。言归正传，之后输入git clone git@github.com:xxxxxx(github id)/xxxx.git(name of repository)即可。
+    remark：此处，git@github.com/.....的地址对应的是ssh协议，http开头的地址是http协议，不过目前好像不能用http协议了，如果能用好像还得要求每次都输入口令。
+    
+
