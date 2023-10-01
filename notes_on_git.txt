@@ -113,3 +113,23 @@ Notice:
     git merge --no-ff -m "commit message" <branch>
     -之后再git branch -d <branch>删去多余分支后，使用git log命令仍能看到历史分支记录。
     remark:在合并的两个分支有冲突的情况下，之前说过需要手动调整，此时也会默认禁用Fast forward模式，因而也会保留branch记录。
+    
+25.bug分支：
+    -这个问题适用于这样一个场景：main分支是你的主分支，你在完成某一代码任务（例如，工期一周），你在dev分支上进行工作，修改了若干文件（记为a，b，c，d），这些修改有些还在工作区，有些提交到暂存区，总而言之这几个文件下有很多你还没commit的修改，此时，突然，有个文件e中间有bug（编号为101），需要你尽快修改好（例如，两小时），此时的你自然希望新建一个分支issue-101,希望在这上面把bug修了，然后commit，再merge到main分支去，这样子就不影响到需要用该文件的其他人。
+    -然而，问题在于，由于你的HEAD目前指向的分区dev有未提交的修改，当你使用git switch去切换到其他分支时，这些暂存区和工作区的改动依旧存在，换言之，到了其他分支，用git status查看，发现别的分区也会显示有未提交的修改（这是很合理的，因为修改分支本质上是HEAD指针切换了地址，而与工作区和暂存区里的改动无关），而这是不符合你的心意的，更不符合分支的使用原则（创建分支本就是为了先在其他分支进行修改，确保无误后再merge到主分支）。
+    -于是，在创建切换新bug分支前，需要用git提供的stash功能，将当前dev分区的“工作现场”储存起来：
+    git stash
+    -这之后，再用git status查看，会发现dev分支下工作区和暂存区都是干净的（准确地说，是工作区与暂存区都是干净的，无论哪个分支）。
+    -此时就可以安心创建git switch -c issue-101，然后修改bug，git add, git commit, switch到main分支，git merge --no-ff -m "message" issue-101,然后删除issue-101，一气呵成。
+    -修完bug，此时我们回到dev分区，依旧是干干净净，这时候要如何找回之前存起来的“工作现场”？，如下：
+    git stash list， 这一命令会把我们stash的所有现场都还原，形如：stash@{num}:WIP on <branch>: xxxxx(commit id) "message(当时那个工作现场下，HEAD指向的commit的说明)"，（num是不同stash标号，从0开始计数，比如此时是0）
+    -然后有两种恢复方法：
+    -1.git stash apply stash@{num}：这一方法的特点是，不会删除stash区中的工作现场，如果要删除，还得用git stash drop stash@{num}命令去删掉stash区的现场。
+    -2.git stash pop:正如pop这个词的含义一样，它在弹出工作现场后，stash中的工作现场就没了。（问题是，如果有多个stash，会先弹出哪一个？）
+    -于是我们恢复了先前的工作区和暂存区，就可以继续之前的代码任务了。
+    -wait a minute!此时的你想到一个事，既然dev是从之前的main上创建的分支，main上的e文件有bug，那么dev上的e文件也有bug咯？你想到这，意识到，之后将dev分支merge到主分支时，或许不可避免的要有冲突了。但其实还有解决办法，就是此时在dev上也把bug修了。
+    -怎么修？当然可以把先前的修bug操作再弄一遍，然后add，然后等待commit。但是还有一个办法：使用git cherry-pick命令！
+    git cherry-pick <commit-id>
+    -此处，commit id为之前，在issue-101分支中修改好bug后add再commit时HEAD指向的id，只需要用git log命令就可以往前找到。
+    -毕竟，修bug本质上是改代码，本质上就是修改了文件，然后提交，那么之前有提交过的记录，再加上，git本身追踪的正是“修改”而非“文件本身”，这使得修bug某种意义上就对应于最终的commit操作，既然如此，那么把先前的commit再复制一遍就行了。当然，由于现在暂存区也有内容，而我们只想把当时那个暂存区里的内容先commit了，因此要用专门的pick-cherry命令去操作，相当于，有了第二个暂存区！
+    
