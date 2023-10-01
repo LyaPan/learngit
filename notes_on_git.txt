@@ -84,3 +84,16 @@
     remark1:--graph显示分支的合并情况；
     remark2:--pretty=oneline简化说明内容到一行，不显示用户名和油箱
     remark3:--abbrev-commit是将commit id简写，只保留足够区分不同commit版本的id位数。
+    
+23.用ssh端口而非port端口去git push/clone:
+    (参见：https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port）
+    step1:终端中输入vim ~/.ssh/config (我的.ssh目录在用户主目录下，故用~/,视具体位置写)，如果目录下没有config文件那么vim会创建一个新的config文件。
+    step2:在config文件中输入以下内容
+        Host github.com
+            Hostname ssh.github.com
+            Port 443
+            User git
+    step3:输入ssh -T -p 443 git@ssh.github.com以测试，如果是第一次干这事，会弹出一堆东西，然后输入yes回车就可以。之后会反馈，“Hi XXX! You've successfully authenticated, but GitHub does not provide shell access.”这么一段话。就代表这事成了。
+    step4: 这之后再git push就是走的ssh，应该会快一些。
+    remark：似乎可以在这句话下面多加一些什么，然后就可以设置用网络代理去弄这个ssh端口了。
+    
