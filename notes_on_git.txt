@@ -35,4 +35,7 @@
     working directroy-->stage(or index)-->branch(with name like "master" or "main" or others)
     stage and branches together consists of repository(版本库)
     
+丢弃文件在暂存区的修改：git restore --staged filename.xxx 
+    git reset HEAD filename.xxx （这个指令也行，直接退回到这个名字的文件的branch版本）
+    注意，取消在暂存区（stage）里的修改后，工作区里还有修改，因此还要再丢弃文件在工作的修改
 
