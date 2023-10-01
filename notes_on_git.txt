@@ -66,4 +66,12 @@
     step2：克隆到本地，先cd到你想clone这个仓库的位置，这个位置不必是已经git init了的文件夹，因为clone下来的文件夹是一个已经初始化为仓库的文件夹，而且感觉最好也不要放在已有仓库的目录下，这样子会变成仓库里还有个仓库，感觉很不对劲。言归正传，之后输入git clone git@github.com:xxxxxx(github id)/xxxx.git(name of repository)即可。
     remark：此处，git@github.com/.....的地址对应的是ssh协议，http开头的地址是http协议，不过目前好像不能用http协议了，如果能用好像还得要求每次都输入口令。
     
-
+20.分支系列初步：
+    --1.查看分支：git branch   会显示所有branch，当前branch前会有个*号；
+    --2.创建分支：git branch <name>
+    --3.切换分支：git checkout <name> 或者  git switch <name>
+    --4.创建+切换分支：git checkout -b <name> 或者  git switch -c <name>
+    --5.合并某分支到当前分支：git merge <name>
+    --6.删除分支：git branch -d <name>
+    --7.git鼓励大量使用分支！
+    
