@@ -38,4 +38,10 @@
 丢弃文件在暂存区的修改：git restore --staged filename.xxx 
     git reset HEAD filename.xxx （这个指令也行，直接退回到这个名字的文件的branch版本）
     注意，取消在暂存区（stage）里的修改后，工作区里还有修改，因此还要再丢弃文件在工作的修改
+    
+删除文件：rm filename.xxx （删除本地文件）
+    git rm filename.xxx  （删除git仓库里的文件）
+    git commit -m "xxx"  （删除后还要提交commit）
+    git checkout -- filename.xxx （在还未提交修改前，可以用该命令后悔，用版本库里的版本替换工作区的版本，本质上，无论工作区是修改还是删除，都可以用此一键还原）
+    如果已经commit了，就只能用版本回退了。回退前记得把工作区其他修改提交。
 
