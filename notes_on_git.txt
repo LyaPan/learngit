@@ -133,3 +133,17 @@ Notice:
     -此处，commit id为之前，在issue-101分支中修改好bug后add再commit时HEAD指向的id，只需要用git log命令就可以往前找到。
     -毕竟，修bug本质上是改代码，本质上就是修改了文件，然后提交，那么之前有提交过的记录，再加上，git本身追踪的正是“修改”而非“文件本身”，这使得修bug某种意义上就对应于最终的commit操作，既然如此，那么把先前的commit再复制一遍就行了。当然，由于现在暂存区也有内容，而我们只想把当时那个暂存区里的内容先commit了，因此要用专门的pick-cherry命令去操作，相当于，有了第二个暂存区！
     
+26.feature分支：
+    -开发新的feature，最好新建一个分支；
+    -如果要丢弃一个没有被合并过的分支（这个分支有与主分支不同的修改），此时需要用git branch -D <name>强行删除。（小-d命令只会提示警告）。
+
+27.多人协作的工作模式：
+    -1.用git push origin <branch-name>提交自己的修改；
+    -2.如果推送失败，应该是远程分支比本地分支更新，需要先用git pull试图合并；
+    -3.如果合并有冲突，则在本地解决冲突，并本地commit提交；（git会先尝试自动合并，失败的话，手动按照前面解决冲突的部分去解决）；
+    -4.没有冲突或解决掉冲突后，再用git push origin <branch-name>推送即可；
+    -remark：如果git pull提示“no tracking information”，说明本地分支与远程分支的链接关系没有创建，用如下命令即可创建链接：
+    git branch --set-upstream-to <branch-name> origin/<branch-name>  （其中，第一个<branch-name>是本地分支名，第二个origin/<branch-name>是远程分支名）；
+    -5.如果别人在远程创建了一个branch，自己本地没有，那么就可以用如下命令在本地创建和远程分支对应的分支（名字最好是一样的）：
+    git checkout -b branch-name origin/branch-name 或 git switch -c branch-name origin/branch-name
+      
