@@ -169,4 +169,10 @@ Notice:
     -即：某开源项目官方仓库  ----  Fork的Git个人仓库 ----  本地仓库
     -如果你想要这个开源项目的官方仓库接受你的修改，就可以在Github上发起一个pull request。这时候就由官方仓库的人员决定是否接受你的修改了。
     
-    
+32.同时使用多个远程库（例如，同时使用git和gitee）：
+   -一般来说，正常用即可，但是，添加新的远程库时要起不同的名字，操作如下：
+   -git remote rm origin: 把现有的git的远程库关联删了（只是删个关联和名字，不影响两边文件）；
+   -git remote add <linkname1> git@github.com:xxxx/xxx.git
+   -git remote add <linkname2> git@gitee.com:xxxx/xxx.git
+   -如上操作即可，linkname就是要起的名字，比如就用github和gitee这俩名字。那么之后git push时就写作git push github <branchname>与git push gitee <branchname>即可。
+   
