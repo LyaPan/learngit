@@ -148,4 +148,25 @@ Notice:
     git checkout -b branch-name origin/branch-name 或 git switch -c branch-name origin/branch-name
     
 28.git rebase操作：把未push的分叉的提交历史整理成一条直线，提交的内容是一样的，但是修改了提交的顺序。每次操作完后，再用push将本地分支推送到远程，则远程分支也是整理过的。
-  
+
+29.打tag标签（e.g.版本信息）：
+    git tag <tagname>:新建一个标签，默认打在HEAD指向的commit上；
+    git tag <tagname> <commit id>:给指定commit打tag；
+    git tag:查看所有标签，按字母顺序排序；  
+    git show <tagname>:查看标签信息
+    - remark:tag是一个指向commit的死指针，不管在哪个branch上，只要该branch含有这个tag对应的commit，那么git tag命令就会显示有这个tag；而branch是指向commit的活指针，当有了新的commit时该branch的HEAD就会指向新的commit。
+    
+30. 操作标签：
+    git tag -d <tagname>:删除标签
+    git push origin <tagname>:将某个tag推送到远程，origin是远程库的名字，可以用git remote -v查到。一般而言，tag只会储存在本地，不会自动推送到远程。
+    git push origin --tags:一次性推送全部尚未推送到远程的本地标签。
+    git tag -d <tagname>:也只能删除本地标签，为了继续删除远程的标签，用push命令。如下：
+    git push origin :refs/tags/<tagname>:删除远程标签。
+    
+31.Github上Fork与pull request操作：
+    -我们可以在git上clone任何开源项目到本地，但是我们没有权限去push到别人的仓库。
+    -正确做法是，Fork你想要的开源仓库到自己的Github仓库上，然后拥有自己Fork后的仓库的读写权限，这之后可以建立本地仓库与自己Github上Fork仓库的链接。
+    -即：某开源项目官方仓库  ----  Fork的Git个人仓库 ----  本地仓库
+    -如果你想要这个开源项目的官方仓库接受你的修改，就可以在Github上发起一个pull request。这时候就由官方仓库的人员决定是否接受你的修改了。
+    
+    
