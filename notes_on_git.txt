@@ -146,4 +146,6 @@ Notice:
     git branch --set-upstream-to <branch-name> origin/<branch-name>  （其中，第一个<branch-name>是本地分支名，第二个origin/<branch-name>是远程分支名）；
     -5.如果别人在远程创建了一个branch，自己本地没有，那么就可以用如下命令在本地创建和远程分支对应的分支（名字最好是一样的）：
     git checkout -b branch-name origin/branch-name 或 git switch -c branch-name origin/branch-name
-      
+    
+28.git rebase操作：把未push的分叉的提交历史整理成一条直线，提交的内容是一样的，但是修改了提交的顺序。每次操作完后，再用push将本地分支推送到远程，则远程分支也是整理过的。
+  
