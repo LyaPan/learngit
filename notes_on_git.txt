@@ -61,7 +61,7 @@ Notice:
     step2:把你的公钥,添加到你的github账号里去:登陆github,没账号先创一个,连不上就想办法翻个墙.打开setting,再打开ssh and gpg keys这个设置,点new ssh key,把id_rsa.pub里面的内容全部复制到里面,添加即可.
     step3:创建git仓库:先点create a new repository,写个repository name(仓库名),创建.
     step4:和电脑上的仓库关联:打开bash,cd到本地仓库的目录,然后输入 git remote add origin git@github.com:xxxxxxx(你的github用户名)/xxxx.git(你的仓库名)即可,此处有一点要注意,千万别按github上提示的那个来,那个提示的是填http地址,但是貌似github从21年8月13日开始就不能用http登录了还是咋地,我们用的是ssh命令,因此要用形如 git@github.com/xxxxx/xxx.git的地址而不是https://github.com/xxxx/xxxx.git的地址;输入完后,敲回车,等一会,因为连接github可能要时间,总之会有反馈,然后如果是第一次用这个ssh连接,还会出现一个warning,要你确认这个Github服务器的key是不是真的来自Github,输入yes,回车,就ok了;这之后github的key就被添加到本机信任列表里.
-    remark：gir remote add origin xxxxx,此处的origin就是给远程库起的名字
+    remark：git remote add origin xxxxx,此处的origin就是给远程库起的名字
     
 16.查看远程库信息：git remote -v
 
